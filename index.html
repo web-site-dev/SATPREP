@@ -365,6 +365,198 @@
             background: #28a745;
         }
 
+        /* Question Navigator Styles */
+        .question-navigator {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+            width: 200px;
+        }
+
+        .navigator-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .question-nav-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-nav-btn:hover {
+            background: #f8f9fa;
+            border-color: #0066cc;
+        }
+
+        .question-nav-btn.current {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+
+        .question-nav-btn.answered {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .question-nav-btn.marked {
+            background: #ffc107;
+            color: #333;
+            border-color: #ffc107;
+            position: relative;
+        }
+
+        .question-nav-btn.marked::after {
+            content: "⭐";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.7em;
+        }
+
+        .navigator-toggle {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,102,204,0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .navigator-toggle:hover {
+            background: #0052a3;
+            transform: scale(1.1);
+        }
+
+        .exam-controls {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .next-btn-new {
+            background: #0066cc;
+            color: white;
+        }
+
+        .next-btn-new:hover {
+            background: #0052a3;
+            transform: translateY(-1px);
+        }
+
+        .mark-review-btn {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .mark-review-btn:hover {
+            background: #e0a800;
+            transform: translateY(-1px);
+        }
+
+        .mark-review-btn.marked {
+            background: #28a745;
+            color: white;
+        }
+
+        .previous-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .previous-btn:hover {
+            background: #545b62;
+            transform: translateY(-1px);
+        }
+
+        .finish-btn-new {
+            background: #dc3545;
+            color: white;
+        }
+
+        .finish-btn-new:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .navigator-legend {
+            margin-top: 15px;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px 0;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            border: 1px solid #dee2e6;
+        }
+
+        .legend-current { background: #0066cc; }
+        .legend-answered { background: #28a745; }
+        .legend-marked { background: #ffc107; }
+        .legend-unanswered { background: white; }
+
         .question-section {
             margin-bottom: 30px;
         }
@@ -742,6 +934,33 @@
                     <span class="timer-display" id="timerDisplay">35:00</span>
                 </div>
             </div>
+
+            <!-- Question Navigator -->
+            <div class="question-navigator" id="questionNavigator" style="display: none;">
+                <div class="navigator-title">Questions</div>
+                <div class="question-grid" id="questionGrid"></div>
+                <div class="navigator-legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-current"></div>
+                        <span>Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-answered"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-marked"></div>
+                        <span>Marked</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-unanswered"></div>
+                        <span>Not Answered</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigator Toggle Button -->
+            <button class="navigator-toggle" id="navigatorToggle" onclick="toggleNavigator()" title="Question Navigator">🧭</button>
             
             <div class="exam-content">
                 <div class="question-section">
@@ -756,8 +975,10 @@
                 </div>
                 
                 <div class="exam-controls">
-                    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
-                    <button class="finish-btn" id="finishBtn" onclick="finishExam()">Finish Exam</button>
+                    <button class="control-btn previous-btn" id="previousBtn" onclick="previousQuestion()">◀ Previous</button>
+                    <button class="control-btn mark-review-btn" id="markReviewBtn" onclick="toggleMarkForReview()">Mark for Review</button>
+                    <button class="control-btn next-btn-new" id="nextBtnNew" onclick="nextQuestionNew()">Next ▶</button>
+                    <button class="control-btn finish-btn-new" id="finishBtnNew" onclick="finishExam()" style="display: none;">Finish Exam</button>
                 </div>
             </div>
 
@@ -965,7 +1186,7 @@
         }
 
         function getSampleData() {
-            // Sample data from the provided PDF content
+            
             return `Question ID 37e5c794
 ID: 37e5c794
 Despite being cheap, versatile, and easy to produce, ______ they are made from nonrenewable petroleum, and most do not
@@ -1212,6 +1433,8 @@ Question Difficulty: Easy`;
         let examTimer = null;
         let timeRemaining = 35 * 60; // 35 minutes in seconds
         let timerEnabled = false; // Timer is OFF by default
+        let markedQuestions = new Set(); // Track marked questions
+        let questionStates = []; // Track question states (answered, marked, etc.)
 
         // Annotation variables
         let currentAnnotationMode = null;
@@ -1295,6 +1518,8 @@ Question Difficulty: Easy`;
             currentQuestionIndex = 0;
             userAnswers = [];
             selectedAnswer = null;
+            markedQuestions.clear();
+            questionStates = new Array(examQuestions.length).fill('unanswered');
             timeRemaining = 35 * 60;
             timerEnabled = false; // Reset timer to OFF
             
@@ -1306,6 +1531,9 @@ Question Difficulty: Easy`;
             
             // Stop any existing timer
             stopTimer();
+            
+            // Initialize question navigator
+            initializeQuestionNavigator();
             
             // Load first question
             loadQuestion(currentQuestionIndex);
@@ -1356,6 +1584,12 @@ Question Difficulty: Easy`;
         function loadQuestion(index) {
             const question = examQuestions[index];
             
+            // Update current question index
+            currentQuestionIndex = index;
+
+            // Reset selected answer for this question
+            selectedAnswer = null;
+            
             // Update question counter
             document.getElementById('questionCounter').textContent = 
                 `Question ${index + 1} of ${examQuestions.length}`;
@@ -1366,45 +1600,58 @@ Question Difficulty: Easy`;
             // Load choices
             const choicesContainer = document.getElementById('examChoices');
             choicesContainer.innerHTML = question.choices.map(choice => `
-                <div class="choice-option" onclick="selectAnswer('${choice.letter}', this)">
+                <div class="choice-option" onclick="selectAnswerNew('${choice.letter}', this)">
                     <span class="choice-letter">${choice.letter}</span>
                     <span class="choice-text">${choice.text}</span>
                 </div>
             `).join('');
             
-            // Hide explanation and controls
-            document.getElementById('explanationSection').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'none';
-            document.getElementById('finishBtn').style.display = 'none';
+            // Restore previous answer if exists
+            if (userAnswers[index]) {
+                const selectedChoice = findChoiceByLetter(userAnswers[index].selected);
+                if (selectedChoice) {
+                    selectedChoice.classList.add('selected');
+                }
+            }
             
-            // Reset selected answer
-            selectedAnswer = null;
-
+            // Hide explanation
+            document.getElementById('explanationSection').style.display = 'none';
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+            
+            // Update question navigator
+            updateQuestionNavigator();
+            
+            // Update mark for review button
+            updateMarkReviewButton();
+            
             // Load annotations for this question
             loadAnnotations(index);
         }
 
-        function selectAnswer(letter, element) {
-            // If already answered, don't allow change
+        function selectAnswerNew(letter, element) {
+            // Prevent multiple selections
             if (selectedAnswer !== null) return;
-            
+
             selectedAnswer = letter;
             const question = examQuestions[currentQuestionIndex];
             const isCorrect = letter === question.correctAnswer;
-            
+
             // Store user answer
             userAnswers[currentQuestionIndex] = {
                 selected: letter,
                 correct: question.correctAnswer,
                 isCorrect: isCorrect
             };
-            
+
             // Update all choice options to show results
             const allChoices = document.querySelectorAll('.choice-option');
             allChoices.forEach(choice => {
                 const choiceLetter = choice.querySelector('.choice-letter').textContent;
                 choice.style.pointerEvents = 'none'; // Disable clicking
-                
+                choice.classList.remove('selected', 'correct', 'incorrect');
+
                 if (choiceLetter === question.correctAnswer) {
                     choice.classList.add('correct');
                     choice.querySelector('.choice-text').innerHTML += 
@@ -1415,17 +1662,22 @@ Question Difficulty: Easy`;
                         '<span class="result-indicator incorrect"> ✗ Incorrect</span>';
                 }
             });
-            
+
             // Show explanation
             document.getElementById('explanationText').textContent = question.rationale;
             document.getElementById('explanationSection').style.display = 'block';
-            
+
             // Show appropriate button
             if (currentQuestionIndex === examQuestions.length - 1) {
-                document.getElementById('finishBtn').style.display = 'inline-block';
+                document.getElementById('finishBtnNew').style.display = 'inline-block';
+                document.getElementById('nextBtnNew').style.display = 'none';
             } else {
-                document.getElementById('nextBtn').style.display = 'inline-block';
+                document.getElementById('nextBtnNew').style.display = 'inline-block';
+                document.getElementById('finishBtnNew').style.display = 'none';
             }
+
+            // Update question navigator
+            updateQuestionNavigator();
         }
 
         function nextQuestion() {
@@ -1433,11 +1685,135 @@ Question Difficulty: Easy`;
             loadQuestion(currentQuestionIndex);
         }
 
+        // Question Navigator Functions
+        function initializeQuestionNavigator() {
+            const grid = document.getElementById('questionGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < examQuestions.length; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i + 1;
+                btn.onclick = () => navigateToQuestion(i);
+                grid.appendChild(btn);
+            }
+            
+            updateQuestionNavigator();
+        }
+
+        function updateQuestionNavigator() {
+            const buttons = document.querySelectorAll('.question-nav-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('current', 'answered', 'marked');
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('current');
+                } else if (userAnswers[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                if (markedQuestions.has(index)) {
+                    btn.classList.add('marked');
+                }
+            });
+        }
+
+        function toggleNavigator() {
+            const navigator = document.getElementById('questionNavigator');
+            const toggle = document.getElementById('navigatorToggle');
+            
+            if (navigator.style.display === 'none' || !navigator.style.display) {
+                navigator.style.display = 'block';
+                toggle.style.transform = 'scale(1.1)';
+            } else {
+                navigator.style.display = 'none';
+                toggle.style.transform = 'scale(1)';
+            }
+        }
+
+        function navigateToQuestion(index) {
+            if (index >= 0 && index < examQuestions.length) {
+                loadQuestion(index);
+            }
+        }
+
+        function updateNavigationButtons() {
+            const previousBtn = document.getElementById('previousBtn');
+            const nextBtn = document.getElementById('nextBtnNew');
+            const finishBtn = document.getElementById('finishBtnNew');
+            
+            // Show/hide previous button
+            previousBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+            
+            // Show/hide next and finish buttons
+            if (currentQuestionIndex === examQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                finishBtn.style.display = 'none';
+            }
+        }
+
+        function updateMarkReviewButton() {
+            const markBtn = document.getElementById('markReviewBtn');
+            
+            if (markedQuestions.has(currentQuestionIndex)) {
+                markBtn.classList.add('marked');
+                markBtn.textContent = 'Unmark';
+            } else {
+                markBtn.classList.remove('marked');
+                markBtn.textContent = 'Mark for Review';
+            }
+        }
+
+        function toggleMarkForReview() {
+            if (markedQuestions.has(currentQuestionIndex)) {
+                markedQuestions.delete(currentQuestionIndex);
+            } else {
+                markedQuestions.add(currentQuestionIndex);
+            }
+            
+            updateMarkReviewButton();
+            updateQuestionNavigator();
+        }
+
+        function nextQuestionNew() {
+            if (currentQuestionIndex < examQuestions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        function findChoiceByLetter(letter) {
+            const choices = document.querySelectorAll('.choice-option');
+            for (let choice of choices) {
+                if (choice.querySelector('.choice-letter').textContent === letter) {
+                    return choice;
+                }
+            }
+            return null;
+        }
+
         function finishExam() {
             stopTimer();
             
+            // Show confirmation if there are unanswered questions
+            const unansweredCount = examQuestions.length - userAnswers.filter(a => a).length;
+            if (unansweredCount > 0) {
+                const confirmFinish = confirm(`You have ${unansweredCount} unanswered questions. Are you sure you want to finish the exam?`);
+                if (!confirmFinish) {
+                    return;
+                }
+            }
+            
             // Calculate results
-            const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+            const correctAnswers = userAnswers.filter(answer => answer && answer.isCorrect).length;
             const totalQuestions = examQuestions.length;
             const percentage = Math.round((correctAnswers / totalQuestions) * 100);
             
@@ -1446,6 +1822,8 @@ Question Difficulty: Easy`;
             
             // Hide exam content and show results
             document.querySelector('.exam-content').style.display = 'none';
+            document.getElementById('questionNavigator').style.display = 'none';
+            document.getElementById('navigatorToggle').style.display = 'none';
             document.getElementById('examResults').style.display = 'block';
             
             // Update result displays
@@ -1461,9 +1839,15 @@ Question Difficulty: Easy`;
             document.querySelector('.exam-content').style.display = 'block';
             document.getElementById('examInterface').style.display = 'none';
             document.getElementById('results').style.display = 'block';
+            document.getElementById('questionNavigator').style.display = 'none';
+            document.getElementById('navigatorToggle').style.display = 'block';
             
             // Show upload section again
             document.querySelector('.upload-section').classList.remove('hidden');
+            
+            // Reset navigation state
+            markedQuestions.clear();
+            questionStates = [];
         }
 
         // Annotation Functions
